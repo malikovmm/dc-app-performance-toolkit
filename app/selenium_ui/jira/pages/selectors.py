@@ -151,3 +151,29 @@ class BoardLocators:
     # Scrum boards
     scrum_board_backlog_content = (By.CSS_SELECTOR, "#ghx-backlog[data-rendered]:not(.browser-metrics-stale)")
     board_columns = (By.CSS_SELECTOR, ".ghx-column")
+
+
+
+class SimpleWikiPageLocator:
+    sw_page = (By.XPATH, '//*[@id="content"]/div[1]/div/div[2]/div/div[1]')
+    sw_page_comment = (By.XPATH, '//input[@placeholder="What do you want to say?"]')
+    sw_page_comment_textfield = (By.CLASS_NAME, 'ProseMirror')
+    sw_comment_block = (By.XPATH, '//*[@data-test-id="page-comments"]')
+    sw_comment_save = (
+        By.XPATH, '//*[@data-test-id="page-comments"]/div[last()]/div[2]/div/div[2]/div[2]/div/div[1]/button')
+
+
+class SimpleWikiPageEditorLocator:
+    sw_page_editor_textfield_location = (By.CLASS_NAME, "ProseMirror")
+    sw_page_editor_title_location = (By.XPATH, "//input[@name='title']")
+    sw_page_editor_save_button = (
+        By.XPATH, '//form/div/div[2]/div/div[2]/div/div[1]/button')
+
+
+class SimpleWikiPagesListLocator:
+    sw_add_page_dialog = (By.XPATH, '//*[@data-test-id="dialog-page-add"]')
+    sw_add_page = (By.XPATH, '//*[@data-test-id="page-header"]/div/div/div[2]/button')
+    sw_pages_table = (By.XPATH, '//*[@data-test-id="container-page-list"]/div[3]/div/table')
+    sw_add_page_title = (By.XPATH, '//input[@name="title"]')
+    sw_create_page = (By.XPATH, '//div[@data-test-id="dialog-page-add"]/footer/div/div[1]/button')
+    sw_load_mask = (By.XPATH, '//div[@data-test-id="load-mask"]')
