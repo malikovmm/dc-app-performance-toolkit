@@ -11,7 +11,7 @@ class PopupLocators:
 class UrlManager:
 
     def __init__(self, issue_key=None, issue_id=None, project_key=None, jql=None, projects_list_page=None,
-                 board_id=None):
+                 board_id=None, page_key=None):
         self.host = JIRA_SETTINGS.server_url
         self.login_params = '/login.jsp'
         self.logout_params = '/logoutconfirm.jsp'
@@ -65,7 +65,7 @@ class UrlManager:
 
     def logout_url(self):
         return f"{self.host}{self.logout_params}"
-        
+
     def create_sw_page_url(self):
         return f"{self.host}{self.page_url}"
 
