@@ -1,7 +1,7 @@
 import random
 import urllib.parse
 
-from selenium_ui.conftest import print_timing
+from selenium_ui.conftest import print_timing, Dataset
 from selenium_ui.jira.pages.pages import Login, PopupManager, Issue, Project, Search, ProjectsList, \
     BoardsList, Board, Dashboard, Logout
 
@@ -247,3 +247,10 @@ def log_out(webdriver, datasets):
         logout_page.click_logout()
         logout_page.wait_for_page_loaded()
     measure()
+
+
+if __name__ == '__main__':
+    dayasets = Dataset()
+    setup_run_data(dayasets.jira_dataset())
+    print("dayasets.jira_dataset() >>>>>>>>>>")
+    print(dayasets.jira_dataset())
