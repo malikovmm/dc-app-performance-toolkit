@@ -19,6 +19,7 @@ JQLS = "jqls"
 PROJECTS = "projects"
 CUSTOM_ISSUES = "custom_issues"
 
+PAGES = 'pages'
 DEFAULT_USER_PASSWORD = 'password'
 DEFAULT_USER_PREFIX = 'performance_'
 ERROR_LIMIT = 10
