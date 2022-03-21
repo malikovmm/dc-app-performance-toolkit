@@ -26,6 +26,9 @@ class UrlManager:
         self.boards_list_params = '/secure/ManageRapidViews.jspa'
         self.scrum_board_backlog_params = f"/secure/RapidBoard.jspa?rapidView={board_id}&view=planning"
         self.scrum_board_params = f"/secure/RapidBoard.jspa?rapidView={board_id}"
+        self.page_url = f"/wiki/p/{project_key}/view/{page_key}"
+        self.page_edit_url = f"/wiki/p/{project_key}/view/{page_key}/edit"
+        self.pages_list = f"/wiki/p/{project_key}/view"
 
     def login_url(self):
         return f"{self.host}{self.login_params}"
@@ -62,7 +65,15 @@ class UrlManager:
 
     def logout_url(self):
         return f"{self.host}{self.logout_params}"
+        
+    def create_sw_page_url(self):
+        return f"{self.host}{self.page_url}"
 
+    def create_sw_editor_page(self):
+        return f"{self.host}{self.page_edit_url}"
+
+    def create_sw_pages_list(self):
+        return f"{self.host}{self.pages_list}"
 
 class LoginPageLocators:
 

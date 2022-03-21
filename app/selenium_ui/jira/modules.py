@@ -17,6 +17,7 @@ USERS = "users"
 ISSUES = "issues"
 CUSTOM_ISSUES = "custom_issues"
 JQLS = "jqls"
+SW_PAGES = "pages"
 PROJECTS = "projects"
 
 
@@ -25,6 +26,14 @@ def setup_run_data(datasets):
     projects_count = len(datasets[PROJECTS])
     user = random.choice(datasets[USERS])
     issue = random.choice(datasets[ISSUES])
+    projects = random.choice(datasets[PROJECTS])
+    datasets['project_key'] = projects[0]
+    if SW_PAGES in datasets:
+        if len(datasets[SW_PAGES]) > 0:
+            sw_page = random.choice(datasets[SW_PAGES])
+            datasets['sw_project_key'] = sw_page[2]
+            datasets['sw_page_key'] = sw_page[1]
+
     if CUSTOM_ISSUES in datasets:
         if len(datasets[CUSTOM_ISSUES]) > 0:
             custom_issue = random.choice(datasets[CUSTOM_ISSUES])
@@ -32,12 +41,10 @@ def setup_run_data(datasets):
             datasets['custom_issue_id'] = custom_issue[1]
     scrum_boards = random.choice(datasets[SCRUM_BOARDS])
     kanban_boards = random.choice(datasets[KANBAN_BOARDS])
-    projects = random.choice(datasets[PROJECTS])
     datasets['username'] = user[0]
     datasets['password'] = user[1]
     datasets['issue_key'] = issue[0]
     datasets['issue_id'] = issue[1]
-    datasets['project_key'] = projects[0]
     datasets['scrum_board_id'] = scrum_boards[0]
     datasets['kanban_board_id'] = kanban_boards[0]
     datasets['jql'] = urllib.parse.quote(random.choice(datasets[JQLS][0]))

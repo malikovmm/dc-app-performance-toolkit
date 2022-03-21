@@ -60,8 +60,8 @@ Add custom actions anywhere between login and log out action. Move this to a dif
 Write your custom selenium scripts in `app/extension/jira/extension_ui.py`.
 Refer to `app/selenium_ui/jira/modules.py` for examples.
 """
-def test_1_selenium_custom_action(jira_webdriver, jira_datasets, jira_screen_shots):
-    extension_ui.app_specific_action(jira_webdriver, jira_datasets)
+# def test_1_selenium_custom_action(jira_webdriver, jira_datasets, jira_screen_shots):
+#     extension_ui.app_specific_action(jira_webdriver, jira_datasets)
 
 def test_1_sw_load_page(jira_webdriver, jira_datasets, jira_screen_shots):
     extension_ui.sw_page_load(jira_webdriver, jira_datasets)
@@ -83,6 +83,3 @@ def test_2_selenium_z_log_out(jira_webdriver, jira_datasets, jira_screen_shots):
     modules.log_out(jira_webdriver, jira_datasets)
 
 
-# this action should be the last one
-def test_2_selenium_z_log_out(jira_webdriver, jira_datasets, jira_screen_shots):
-    modules.log_out(jira_webdriver, jira_datasets)

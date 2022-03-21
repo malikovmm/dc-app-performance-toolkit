@@ -141,3 +141,5 @@ BAMBOO_USERS = __get_bamboo_dataset('users.csv')
 
 DEFAULT_TEST_ACTIONS = __get_default_test_actions()
 ENV_TAURUS_ARTIFACT_DIR = __get_taurus_artifacts_dir()
+
+SW_PAGES = __get_jira_dataset('sw_pages.csv')

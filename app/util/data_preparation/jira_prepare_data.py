@@ -7,7 +7,7 @@ from prepare_data_common import __generate_random_string, __write_to_file
 from util.api.jira_clients import JiraRestClient
 from util.conf import JIRA_SETTINGS
 from util.project_paths import JIRA_DATASET_JQLS, JIRA_DATASET_SCRUM_BOARDS, JIRA_DATASET_KANBAN_BOARDS, \
-    JIRA_DATASET_USERS, JIRA_DATASET_ISSUES, JIRA_DATASET_PROJECTS, JIRA_DATASET_CUSTOM_ISSUES
+    JIRA_DATASET_USERS, JIRA_DATASET_ISSUES, JIRA_DATASET_PROJECTS, JIRA_DATASET_CUSTOM_ISSUES, SW_PAGES
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -78,6 +78,9 @@ def write_test_data_to_files(datasets):
     issues = [f"{issue['key']},{issue['id']},{issue['key'].split('-')[0]}" for issue in datasets[CUSTOM_ISSUES]]
     __write_to_file(JIRA_DATASET_CUSTOM_ISSUES, issues)
 
+    pages = [f"{page['id']},{page['key']},{page['project']['key']}" for page in datasets[PAGES]]
+    __write_to_file(SW_PAGES, pages)
+
     keys = datasets[PROJECTS]
     __write_to_file(JIRA_DATASET_PROJECTS, keys)
 
@@ -87,19 +90,25 @@ def __create_data_set(jira_api):
     dataset[USERS] = __get_users(jira_api)
     perf_user = random.choice(dataset[USERS])
     perf_user_api = JiraRestClient(JIRA_SETTINGS.server_url, perf_user['name'], DEFAULT_USER_PASSWORD)
+    business_projects = __get_business_projects(perf_user_api)
     software_projects = __get_software_projects(perf_user_api)
-    dataset[PROJECTS] = software_projects
-    dataset[ISSUES] = __get_issues(perf_user_api, software_projects)
+    dataset[PROJECTS] = business_projects
+    dataset[PROJECTS].extend(software_projects)
+    dataset[ISSUES] = __get_issues(perf_user_api, business_projects)
+    dataset[ISSUES].extend(__get_issues(perf_user_api, software_projects))
     dataset[CUSTOM_ISSUES] = __get_custom_issues(perf_user_api, JIRA_SETTINGS.custom_dataset_query)
     dataset[SCRUM_BOARDS] = __get_boards(perf_user_api, 'scrum')
     dataset[KANBAN_BOARDS] = __get_boards(perf_user_api, 'kanban')
     dataset[JQLS] = __generate_jqls(count=150)
+    dataset[PAGES] = __get_pages(perf_user_api, business_projects)
+    dataset[PAGES].extend(__get_pages(perf_user_api, software_projects))
     print(f'Users count: {len(dataset[USERS])}')
     print(f'Projects: {len(dataset[PROJECTS])}')
     print(f'Issues count: {len(dataset[ISSUES])}')
+    print(f'Jqls count: {len(dataset[JQLS])}')
     print(f'Scrum boards count: {len(dataset[SCRUM_BOARDS])}')
     print(f'Kanban boards count: {len(dataset[KANBAN_BOARDS])}')
-    print(f'Jqls count: {len(dataset[JQLS])}')
+    print(f'Pages count: {len(dataset[PAGES])}')
     print('------------------------')
     print(f'Custom dataset issues: {len(dataset[CUSTOM_ISSUES])}')
 
@@ -127,6 +136,31 @@ def __get_custom_issues(jira_api, custom_jql):
         if not issues:
             print(f"There are no issues found using JQL {custom_jql}")
     return issues
+
+
+def __get_pages(jira_api, software_projects):
+    url = f'{JIRA_SETTINGS.server_url}/rest/simplewiki/2.0/pages?failOnForbidden=true'
+    pages = []
+    for project in software_projects:
+        start_at = 0
+        cnt = 1
+        while True:
+            try:
+                response = jira_api.post(url, error_msg='Cannot get pages',
+                                         body={"projectKey": project.split(',')[0], "startAt": start_at}).json()
+                pages.extend([response['values'][i] for i in range(len(response['values']))])
+                if start_at <= response['total']:
+                    start_at = response['maxResults'] * cnt
+                    cnt += 1
+                else:
+                    break
+            except Exception:
+                print(f"There are no simpleWiki plugin")
+                return []
+
+    if not pages:
+        print(f"There are no wiki pages")
+    return pages
 
 
 def __get_boards(jira_api, board_type):
@@ -170,6 +204,15 @@ def __check_for_admin_permissions(jira_api):
             user_permissions['permissions']['SYSTEM_ADMIN']['havePermission']):
         raise SystemExit(f"The '{jira_api.user}' user does not have admin permissions.")
 
+
+def __get_business_projects(jira_api):
+    all_projects = jira_api.get_all_projects()
+    software_projects = \
+        [f"{project['key']},{project['id']}" for project in all_projects if 'business' == project.get('projectTypeKey')]
+    if not software_projects:
+        raise SystemExit(
+            f"There are no software projects in Jira accessible by a random performance user: {jira_api.user}")
+    return software_projects
 
 def main():
     print("Started preparing data")
