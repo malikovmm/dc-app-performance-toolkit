@@ -5,7 +5,8 @@ from selenium_ui.jira.pages.pages import SimpleWikiPage, SimpleWikiPageEditor, S
 
 def sw_page_load(webdriver, datasets):
     page = SimpleWikiPage(webdriver, project_key=datasets['sw_project_key'], page_key=datasets['sw_page_key'])
-
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print(datasets)
     @print_timing("selenium_sw_page_load")
     def measure():
         page.go_to()
