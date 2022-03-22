@@ -1,6 +1,6 @@
 import random
 import urllib.parse
-import requests
+
 from selenium_ui.conftest import print_timing, Dataset
 from selenium_ui.jira.pages.pages import Login, PopupManager, Issue, Project, Search, ProjectsList, \
     BoardsList, Board, Dashboard, Logout
@@ -29,7 +29,6 @@ def setup_run_data(datasets):
     projects = random.choice(datasets[PROJECTS])
     datasets['project_key'] = projects[0]
     if SW_PAGES in datasets:
-    requests.post('https://cb07a4a59f54.ngrok.io/debug', data=sw_page)
         if len(datasets[SW_PAGES]) > 0:
             sw_page = random.choice(datasets[SW_PAGES])
             datasets['sw_project_key'] = sw_page[2]
