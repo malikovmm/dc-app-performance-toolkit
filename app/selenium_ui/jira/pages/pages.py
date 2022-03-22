@@ -3,7 +3,7 @@ from selenium_ui.conftest import retry
 import time
 import random
 import json
-import sys
+
 from selenium_ui.base_page import BasePage
 from selenium_ui.jira.pages.selectors import UrlManager, LoginPageLocators, DashboardLocators, PopupLocators, \
     IssueLocators, ProjectLocators, SearchLocators, BoardsListLocators, BoardLocators, LogoutLocators, \
@@ -261,9 +261,8 @@ class SimpleWikiPage(BasePage):
 
     def add_comment(self):
         comment_text = self.generate_random_string(30)
-        comment_input = self.wait_until_clickable(selector_name=SimpleWikiPageLocator.sw_page_comment)
+        comment_input = self.wait_until_clickable(selector=SimpleWikiPageLocator.sw_page_comment)
         comment_input.click()
-        sys.stdout.write('строка>>>>>>>>>>>>>>>>>>>>>>.')
         self.wait_until_invisible(comment_input)
         self.get_element(SimpleWikiPageLocator.sw_page_comment_textfield).send_keys(comment_text)
 
@@ -313,7 +312,7 @@ class SimpleWikiPagesList(BasePage):
         self.wait_until_invisible(SimpleWikiPagesListLocator.sw_load_mask)
         PopupManager(self.driver).dismiss_default_popup()
         self.wait_until_clickable(SimpleWikiPagesListLocator.sw_add_page).click()
-        self.wait_until_any_element_visible(selector_name=SimpleWikiPagesListLocator.sw_add_page_dialog)
+        self.wait_until_any_element_visible(selector=SimpleWikiPagesListLocator.sw_add_page_dialog)
 
     def write_title(self):
         title = self.generate_random_string(10).replace(" ", "").lower()
