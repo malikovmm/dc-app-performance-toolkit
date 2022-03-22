@@ -18,7 +18,7 @@ def sw_page_load(webdriver, datasets):
 
 def sw_page_edit(webdriver, datasets):
     sw_page_editor = SimpleWikiPageEditor(webdriver, project_key=datasets['sw_project_key'],
-                                          page_key=datasets['sw_page_key'])
+                                          page_key=datasets['sw_page_key'], page_number=datasets['sw_page_number'])
 
     @print_timing("selenium_sw_page_edit")
     def measure():

@@ -272,9 +272,9 @@ class SimpleWikiPage(BasePage):
 
 
 class SimpleWikiPageEditor(BasePage):
-    def __init__(self, driver, project_key: str, page_key: str):
+    def __init__(self, driver, project_key: str, page_key: str, page_number: str):
         BasePage.__init__(self, driver)
-        url_manager = UrlManager(project_key=project_key, page_key=page_key)
+        url_manager = UrlManager(project_key=project_key, page_key=page_key, page_number=page_number)
         self.page_url = url_manager.create_sw_editor_page()
         self.page_loaded_selector = [SimpleWikiPageEditorLocator.sw_page_editor_textfield_location,
                                      SimpleWikiPageEditorLocator.sw_page_editor_title_location]

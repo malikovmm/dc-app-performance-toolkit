@@ -11,7 +11,7 @@ class PopupLocators:
 class UrlManager:
 
     def __init__(self, issue_key=None, issue_id=None, project_key=None, jql=None, projects_list_page=None,
-                 board_id=None, page_key=None):
+                 board_id=None, page_key=None, page_number=None):
         self.host = JIRA_SETTINGS.server_url
         self.login_params = '/login.jsp'
         self.logout_params = '/logoutconfirm.jsp'
@@ -27,7 +27,7 @@ class UrlManager:
         self.scrum_board_backlog_params = f"/secure/RapidBoard.jspa?rapidView={board_id}&view=planning"
         self.scrum_board_params = f"/secure/RapidBoard.jspa?rapidView={board_id}"
         self.page_url = f"/wiki/p/{project_key}/view/{page_key}"
-        self.page_edit_url = f"/wiki/p/{project_key}/view/{page_key}/edit"
+        self.page_edit_url = f"/wiki/p/{project_key}/view/{page_key}/{page_number}/edit"
         self.pages_list = f"/wiki/p/{project_key}/view"
 
     def login_url(self):
