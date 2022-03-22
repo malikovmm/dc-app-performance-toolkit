@@ -253,5 +253,4 @@ def log_out(webdriver, datasets):
 if __name__ == '__main__':
     dayasets = Dataset()
     setup_run_data(dayasets.jira_dataset())
-    print("dayasets.jira_dataset() >>>>>>>>>>")
     print(dayasets.jira_dataset())

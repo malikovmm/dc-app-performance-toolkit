@@ -141,7 +141,7 @@ def print_timing(interaction=None):
                 exc_type, full_exception = sys.exc_info()[:2]
                 dsa = ds.jira_dataset()
                 zxc = dsa["pages"]
-                error_msg = f"Failed measure: {interaction} - {exc_type.__name__} dataset >>>>> {zxc}"
+                error_msg = f"Failed measure: {interaction} - {exc_type.__name__}"
             end = time.time()
             timing = str(int((end - start) * 1000))
 
