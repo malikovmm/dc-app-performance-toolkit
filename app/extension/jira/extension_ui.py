@@ -22,7 +22,7 @@ def sw_page_edit(webdriver, datasets):
 
     @print_timing("selenium_sw_page_edit")
     def measure():
-        @print_timing("selenium_sw_page_edit:load_editor")
+        @print_timing(f"selenium_sw_page_edit:load_editor project_key {datasets['sw_project_key']} page_key {datasets['sw_page_key']}")
         def sub_measure():
             sw_page_editor.go_to()
             sw_page_editor.wait_for_page_loaded()
