@@ -3,7 +3,7 @@ from selenium_ui.conftest import retry
 import time
 import random
 import json
-
+import sys
 from selenium_ui.base_page import BasePage
 from selenium_ui.jira.pages.selectors import UrlManager, LoginPageLocators, DashboardLocators, PopupLocators, \
     IssueLocators, ProjectLocators, SearchLocators, BoardsListLocators, BoardLocators, LogoutLocators, \
@@ -263,6 +263,7 @@ class SimpleWikiPage(BasePage):
         comment_text = self.generate_random_string(30)
         comment_input = self.wait_until_clickable(selector_name=SimpleWikiPageLocator.sw_page_comment)
         comment_input.click()
+        sys.stdout.write('строка>>>>>>>>>>>>>>>>>>>>>>.')
         self.wait_until_invisible(comment_input)
         self.get_element(SimpleWikiPageLocator.sw_page_comment_textfield).send_keys(comment_text)
 
