@@ -1,6 +1,6 @@
 import random
 import urllib.parse
-
+import json
 from selenium_ui.conftest import print_timing, Dataset
 from selenium_ui.jira.pages.pages import Login, PopupManager, Issue, Project, Search, ProjectsList, \
     BoardsList, Board, Dashboard, Logout
@@ -30,6 +30,8 @@ def setup_run_data(datasets):
     datasets['project_key'] = projects[0]
     if SW_PAGES in datasets:
         if len(datasets[SW_PAGES]) > 0:
+            with open('file.txt', 'w') as file:
+                 file.write(json.dumps(sw_page))
             sw_page = random.choice(datasets[SW_PAGES])
             datasets['sw_project_key'] = sw_page[2]
             datasets['sw_page_key'] = sw_page[1]
