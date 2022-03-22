@@ -128,6 +128,7 @@ def print_timing(interaction=None):
                 globals.login_failed = False
             if globals.login_failed:
                 pytest.skip(f"login is failed")
+            ds = Dataset()
             start = time.time()
             error_msg = 'Success'
             full_exception = ''
@@ -138,7 +139,7 @@ def print_timing(interaction=None):
                 success = False
                 # https://docs.python.org/2/library/sys.html#sys.exc_info
                 exc_type, full_exception = sys.exc_info()[:2]
-                error_msg = f"Failed measure: {interaction} - {exc_type.__name__} dataset >>>>> {self.dataset}"
+                error_msg = f"Failed measure: {interaction} - {exc_type.__name__} dataset >>>>> {ds.dataset}"
             end = time.time()
             timing = str(int((end - start) * 1000))
 
